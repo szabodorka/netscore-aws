@@ -68,7 +68,7 @@ public class ReviewDaoJdbc implements ReviewDAO {
     @Override
     public int createReview(NewReview newReview) {
         try(Connection connection = dataSource.getConnection()) {
-            String sql = "INSERT INTO review (title, comment, user_id, website_id) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO review (score, comment, user_id, website_id) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, newReview.score());
             statement.setString(2, newReview.comment());
