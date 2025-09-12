@@ -27,7 +27,7 @@ public class ReviewDaoJdbc implements ReviewDAO {
             while (result.next()) {
                 Review review = new Review(
                         result.getInt("id"),
-                        result.getString("score"),
+                        result.getInt("score"),
                         result.getString("comment"),
                         result.getInt("user_id"),
                         result.getTimestamp("post_date").toLocalDateTime(),
@@ -51,7 +51,7 @@ public class ReviewDaoJdbc implements ReviewDAO {
             if (resultSet.next()) {
                 return new Review(
                         id,
-                        resultSet.getString("score"),
+                        resultSet.getInt("score"),
                         resultSet.getString("comment"),
                         resultSet.getInt("user_id"),
                         resultSet.getTimestamp("post_date").toLocalDateTime(),
@@ -70,7 +70,7 @@ public class ReviewDaoJdbc implements ReviewDAO {
         try(Connection connection = dataSource.getConnection()) {
             String sql = "INSERT INTO review (score, comment, user_id, website_id) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, newReview.score());
+            statement.setInt(1, newReview.score());
             statement.setString(2, newReview.comment());
             statement.setInt(3, newReview.userId());
             statement.setInt(4, newReview.websiteId());
