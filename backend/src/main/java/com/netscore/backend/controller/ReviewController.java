@@ -26,7 +26,7 @@ public class ReviewController {
         return reviewService.getReviewById(id);
     }
 
-    @GetMapping("/website/{websiteId")
+    @GetMapping("/website/{websiteId}")
     public List<ReviewDTO> getReviewsByWebsite(@PathVariable int websiteId) {
         return reviewService.getReviewsByWebsiteId(websiteId);
     }
