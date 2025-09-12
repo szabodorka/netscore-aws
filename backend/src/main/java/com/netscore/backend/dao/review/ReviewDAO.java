@@ -9,5 +9,5 @@ public interface ReviewDAO {
     List<Review> getAllReviewsByWebsiteId(int id);
     Review getReview(int id);
     int createReview(NewReview newReview);
-    int deleteReview(int id);
+    void deleteReview(int id);
 }

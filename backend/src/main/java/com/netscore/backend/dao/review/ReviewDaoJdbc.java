@@ -88,19 +88,13 @@ public class ReviewDaoJdbc implements ReviewDAO {
     }
 
     @Override
-    public int deleteReview(int id) {
+    public void deleteReview(int id) {
         try(Connection connection = dataSource.getConnection()) {
             String sql = "DELETE FROM review WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.executeUpdate();
 
-            ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()){
-                return rs.getInt(1);
-            } else {
-                throw new RuntimeException("No generated ID returned");
-            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error while deleting review", e);
