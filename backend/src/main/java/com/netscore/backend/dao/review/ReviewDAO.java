@@ -6,8 +6,8 @@ import com.netscore.backend.dao.model.review.Review;
 import java.util.List;
 
 public interface ReviewDAO {
-    List<Review> getAllReviewsByWebsiteId();
+    List<Review> getAllReviewsByWebsiteId(int id);
     Review getReview(int id);
-    void createReview(NewReview newReview);
-    void deleteReview(int id);
+    int createReview(NewReview newReview);
+    int deleteReview(int id);
 }
