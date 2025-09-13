@@ -54,7 +54,7 @@ public class WebsiteService {
     public int addNewWebsite(NewWebsiteDTO website) {
         try {
             NewWebsite websiteToSave = new NewWebsite(website.url(), website.userId());
-            websiteDAO.createWebsite(websiteToSave);
+            return websiteDAO.createWebsite(websiteToSave);
         } catch (RuntimeException e) {
             throw new RuntimeException("Error while adding new website", e);
         }
