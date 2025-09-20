@@ -8,8 +8,8 @@ import com.netscore.backend.dao.review.ReviewDAO;
 import com.netscore.backend.dao.review.ReviewDaoJdbc;
 import com.netscore.backend.dao.user.UserDAO;
 import com.netscore.backend.dao.user.UserDaoJdbc;
-import com.netscore.backend.dao.user.WebsiteDAO;
-import com.netscore.backend.dao.user.WebsiteDaoJdbc;
+import com.netscore.backend.dao.website.WebsiteDAO;
+import com.netscore.backend.dao.website.WebsiteDaoJdbc;
 
 
 import javax.sql.DataSource;

@@ -1,4 +1,6 @@
 package com.netscore.backend.dao.model.user;
 
-public record User() {
+import java.time.LocalDateTime;
+
+public record User(int id, String username, String password, LocalDateTime registration_date) {
 }

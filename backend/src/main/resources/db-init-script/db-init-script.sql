@@ -12,7 +12,7 @@ CREATE TABLE "user"(
 CREATE TABLE website(
                          id SERIAL PRIMARY KEY,
                          url text not null,
-                         user_id integer not null REFERENCES "user"(id),
+                         user_id INTEGER REFERENCES "user"(id) ON DELETE SET NULL,
                          post_date TIMESTAMP WITHOUT TIME ZONE DEFAULT now()
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE review(
                        id SERIAL PRIMARY KEY,
                        score int not null,
                        comment text not null,
-                       user_id integer not null REFERENCES "user"(id),
+                       user_id INTEGER REFERENCES "user"(id) ON DELETE SET NULL,
                        post_date  TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
                        website_id integer REFERENCES website(id) ON DELETE CASCADE
 );
