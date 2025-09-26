@@ -38,7 +38,7 @@ public class ReviewService {
             }
             return reviewDTOs;
         } catch (RuntimeException e) {
-            throw new RuntimeException("Error while getting all reviews", e);
+            throw new RuntimeException("Error while getting all reviews by website id", e);
         }
     }
 
