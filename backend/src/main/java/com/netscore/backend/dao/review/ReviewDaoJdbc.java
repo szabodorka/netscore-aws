@@ -21,9 +21,11 @@ public class ReviewDaoJdbc implements ReviewDAO {
     @Override
     public List<Review> getAllReviewsByWebsiteId(int id) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT id, score, comment, user_id, post_date FROM review ORDER BY post_date DESC";
-            ResultSet result = connection.createStatement().executeQuery(sql);
-            List<Review> allReviews = new ArrayList<>();
+            String sql = "SELECT id, score, comment, user_id, post_date FROM review WHERE website_id = ? ORDER BY post_date DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet result = preparedStatement.executeQuery();
+            List<Review> reviews = new ArrayList<>();
             while (result.next()) {
                 Review review = new Review(
                         result.getInt("id"),
@@ -33,9 +35,34 @@ public class ReviewDaoJdbc implements ReviewDAO {
                         result.getTimestamp("post_date").toLocalDateTime(),
                         id
                 );
-                allReviews.add(review);
+                reviews.add(review);
             }
-            return allReviews;
+            return reviews;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all reviews", e);
+        }
+    }
+
+    @Override
+    public List<Review> getAllReviewsByUserId(int id) {
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT id, score, comment, post_date, website_id FROM review WHERE user_id = ? ORDER BY post_date DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet result = preparedStatement.executeQuery();
+            List<Review> reviews = new ArrayList<>();
+            while (result.next()) {
+                Review review = new Review(
+                        result.getInt("id"),
+                        result.getInt("score"),
+                        result.getString("comment"),
+                        id,
+                        result.getTimestamp("post_date").toLocalDateTime(),
+                        result.getInt("website_id")
+                );
+                reviews.add(review);
+            }
+            return reviews;
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading all reviews", e);
         }
