@@ -38,9 +38,30 @@ public class ReviewService {
             }
             return reviewDTOs;
         } catch (RuntimeException e) {
-            throw new RuntimeException("Error while getting all reviews", e);
+            throw new RuntimeException("Error while getting all reviews by website id", e);
         }
     }
+
+    public List<ReviewDTO> getReviewsByUserId(int id) {
+        try {
+            List<Review> reviews = reviewDAO.getAllReviewsByUserId(id);
+            List<ReviewDTO> reviewDTOs = new ArrayList<>();
+            for (Review review : reviews) {
+                reviewDTOs.add(new ReviewDTO(
+                        review.id(),
+                        review.score(),
+                        review.comment(),
+                        review.userId(),
+                        review.postDate(),
+                        review.websiteId()
+                ));
+            }
+            return reviewDTOs;
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error while getting all reviews by user id", e);
+        }
+    }
+
 
     public ReviewDTO getReviewById(int id) {
         try {
