@@ -47,11 +47,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<Integer> login(@RequestParam String username, @RequestParam String password) {
-        NewUserDTO user = new NewUserDTO(username, password);
+    @PostMapping("/login")
+    public ResponseEntity<Integer> login(@RequestBody NewUserDTO newUser) {
         try {
-            int userId = userService.loginUser(user);
+            int userId = userService.loginUser(newUser);
             if (userId == -1) {
                 return ResponseEntity.badRequest().build();
             }
