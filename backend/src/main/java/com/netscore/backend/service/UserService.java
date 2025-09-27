@@ -6,6 +6,8 @@ import com.netscore.backend.dao.model.user.NewUser;
 import com.netscore.backend.dao.model.user.User;
 import com.netscore.backend.dao.user.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -29,7 +31,12 @@ public class UserService {
 
     public int addNewUser(NewUserDTO newUserDTO) {
         try {
-            NewUser newUser = new NewUser(newUserDTO.username(), newUserDTO.password());
+            String username = newUserDTO.username();
+            String passwordHash = BCrypt.hashpw(newUserDTO.password(), BCrypt.gensalt());
+            NewUser newUser = new NewUser(
+                    username,
+                    passwordHash
+            );
             return userDAO.createUser(newUser);
         } catch (RuntimeException e) {
             throw new RuntimeException("Error while adding new user", e);
