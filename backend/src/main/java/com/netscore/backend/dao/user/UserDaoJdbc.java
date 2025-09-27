@@ -24,9 +24,8 @@ public class UserDaoJdbc implements UserDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
                 LocalDateTime registration_date = resultSet.getTimestamp("registration_date").toLocalDateTime();
-                return new User(id, username, password, registration_date);
+                return new User(id, username, registration_date);
             } else {
                 return null;
             }
