@@ -66,19 +66,6 @@ public class UserDaoJdbc implements UserDAO {
         }
     }
 
-    @Override
-    public boolean existsByUsername(String username){
-        String sql = "SELECT * FROM \"user\" WHERE username = ?;";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)
-        ) {
-            pst.setString(1, username);
-            ResultSet rs = pst.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            throw new RuntimeException("SQL Error: failed username validation.", e);
-        }
-    }
 
 
     @Override
@@ -116,19 +103,6 @@ public class UserDaoJdbc implements UserDAO {
         }
     }
 
-    @Override
-    public boolean existsById(int id){
-        String sql = "SELECT * FROM \"user\" WHERE id = ?;";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)
-        ) {
-            pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            throw new RuntimeException("SQL Error: failed username validation.", e);
-        }
-    }
 }
 
 
