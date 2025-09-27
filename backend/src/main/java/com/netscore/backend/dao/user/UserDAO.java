@@ -8,5 +8,5 @@ public interface UserDAO {
     int createUser(NewUser user);
     void deleteUser(int id);
     int getUserIdByUsername(String username);
-    boolean existsById(int id);
+    String getPasswordHashById(int id);
 }
