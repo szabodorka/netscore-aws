@@ -37,10 +37,10 @@ public class UserDaoJdbc implements UserDAO {
     @Override
     public int createUser(NewUser newUser){
         try(Connection connection = dataSource.getConnection()) {
-            String sql = "INSERT INTO \"user\" (username, password) VALUES (?, ?)";
+            String sql = "INSERT INTO \"user\" (username, passwordHash) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, newUser.username());
-            statement.setString(2, newUser.password());
+            statement.setString(2, newUser.passwordHash());
             statement.executeUpdate();
             try (ResultSet keys = statement.getGeneratedKeys()) {
                 if (keys.next()) {
