@@ -80,18 +80,21 @@ public class UserDaoJdbc implements UserDAO {
         }
     }
 
+
     @Override
-    public boolean passwordMatchesById(int id, String password){
-        String sql = "SELECT * FROM \"user\" WHERE id = ? AND password = ?;";
+    public String getPasswordHashById(int id) {
+        String sql = "SELECT passwordHash FROM \"user\" WHERE id = ?;";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)
-        ) {
+             PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setInt(1, id);
-            pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
-            return rs.next();
+            if (rs.next()) {
+                return rs.getString("passwordHash");
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("SQL Error: failed password validation.", e);
+            throw new RuntimeException("SQL Error: could not get passwordHash hash.", e);
         }
     }
 
