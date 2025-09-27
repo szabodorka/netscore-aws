@@ -46,7 +46,8 @@ public class UserService {
     public int loginUser(NewUserDTO newUserDTO){
         try {
             int id = userDAO.getUserIdByUsername(newUserDTO.username());
-            if (!userDAO.existsByUsername(newUserDTO.username()) || !userDAO.passwordMatchesById(id, newUserDTO.password())) {
+            String passwordHash = userDAO.getPasswordHashById(id);
+            if (passwordHash == null || !BCrypt.checkpw(newUserDTO.password(), passwordHash)) {
                 return -1;
             }
             return id;
