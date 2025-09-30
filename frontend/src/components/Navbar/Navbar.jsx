@@ -12,7 +12,7 @@ export default function Navbar() {
     e.preventDefault();
     const query = searchTerm.trim();
     navigate(
-      `/u/websites${query ? `?search=${encodeURIComponent(query)}` : ""}`
+      `/u/websites${query ? `?searchTerm=${encodeURIComponent(query)}` : ""}`
     );
     setSearchTerm("");
   }
