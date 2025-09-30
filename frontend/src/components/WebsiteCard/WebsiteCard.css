@@ -1,0 +1,27 @@
+.website-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  background: #f2f3f4;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  display: grid;
+  gap: 6px;
+}
+
+.website-card:hover {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.website-card-url {
+  font-weight: 600;
+  color: #1f2937;
+  word-break: break-all;
+}
+
+.website-card-meta {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
