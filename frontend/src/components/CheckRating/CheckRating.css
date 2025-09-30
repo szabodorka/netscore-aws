@@ -1,0 +1,23 @@
+.score-display {
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.check {
+  font-size: 1.6rem;
+  transition: color 0.2s ease;
+}
+
+.check-filled {
+  color: #2ecc71;
+}
+
+.check-half {
+  color: #a3e4b3;
+}
+
+.check-empty {
+  color: #ccc;
+}
