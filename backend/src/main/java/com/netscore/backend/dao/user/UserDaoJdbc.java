@@ -24,9 +24,8 @@ public class UserDaoJdbc implements UserDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
                 LocalDateTime registration_date = resultSet.getTimestamp("registration_date").toLocalDateTime();
-                return new User(id, username, password, registration_date);
+                return new User(id, username, registration_date);
             } else {
                 return null;
             }
@@ -38,10 +37,10 @@ public class UserDaoJdbc implements UserDAO {
     @Override
     public int createUser(NewUser newUser){
         try(Connection connection = dataSource.getConnection()) {
-            String sql = "INSERT INTO \"user\" (username, password) VALUES (?, ?)";
+            String sql = "INSERT INTO \"user\" (username, passwordHash) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, newUser.username());
-            statement.setString(2, newUser.password());
+            statement.setString(2, newUser.passwordHash());
             statement.executeUpdate();
             try (ResultSet keys = statement.getGeneratedKeys()) {
                 if (keys.next()) {
@@ -67,32 +66,22 @@ public class UserDaoJdbc implements UserDAO {
         }
     }
 
-    @Override
-    public boolean existsByUsername(String username){
-        String sql = "SELECT * FROM \"user\" WHERE username = ?;";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)
-        ) {
-            pst.setString(1, username);
-            ResultSet rs = pst.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            throw new RuntimeException("SQL Error: failed username validation.", e);
-        }
-    }
+
 
     @Override
-    public boolean passwordMatchesById(int id, String password){
-        String sql = "SELECT * FROM \"user\" WHERE id = ? AND password = ?;";
+    public String getPasswordHashById(int id) {
+        String sql = "SELECT passwordHash FROM \"user\" WHERE id = ?;";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)
-        ) {
+             PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setInt(1, id);
-            pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
-            return rs.next();
+            if (rs.next()) {
+                return rs.getString("passwordHash");
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("SQL Error: failed password validation.", e);
+            throw new RuntimeException("SQL Error: could not get passwordHash hash.", e);
         }
     }
 
@@ -114,19 +103,6 @@ public class UserDaoJdbc implements UserDAO {
         }
     }
 
-    @Override
-    public boolean existsById(int id){
-        String sql = "SELECT * FROM \"user\" WHERE id = ?;";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)
-        ) {
-            pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            throw new RuntimeException("SQL Error: failed username validation.", e);
-        }
-    }
 }
 
 
