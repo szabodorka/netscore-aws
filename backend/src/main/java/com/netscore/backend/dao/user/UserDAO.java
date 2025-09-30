@@ -7,8 +7,6 @@ public interface UserDAO {
     User getUser(int id);
     int createUser(NewUser user);
     void deleteUser(int id);
-    boolean existsByUsername(String username);
-    boolean passwordMatchesById(int id, String password);
     int getUserIdByUsername(String username);
-    boolean existsById(int id);
+    String getPasswordHashById(int id);
 }

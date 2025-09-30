@@ -10,6 +10,7 @@ import com.netscore.backend.dao.user.UserDAO;
 import com.netscore.backend.dao.user.UserDaoJdbc;
 import com.netscore.backend.dao.website.WebsiteDAO;
 import com.netscore.backend.dao.website.WebsiteDaoJdbc;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import javax.sql.DataSource;
@@ -50,6 +51,11 @@ public class Configuration {
     @Bean
     public UserDAO userDAO(DataSource dataSource) {
         return new UserDaoJdbc(dataSource);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

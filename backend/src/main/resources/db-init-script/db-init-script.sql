@@ -6,7 +6,7 @@ CREATE TABLE "user"(
                        id SERIAL PRIMARY KEY,
                        username text not null unique,
                        registration_date  TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
-                       password varchar(100) not null
+                       passwordHash VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE website(
@@ -26,10 +26,9 @@ CREATE TABLE review(
 );
 
 
-
-INSERT INTO "user" (username, password) VALUES ('John Doe', 'pw123');
-INSERT INTO "user" (username, password) VALUES ('Béla', 'apple1');
-INSERT INTO "user" (username, password) VALUES ('Harry Potter', 'harrypotter123');
+INSERT INTO "user" (username, passwordHash) VALUES ('John', '$2a$10$c1LAnNjyLXpHo8ANI7TPa.iqICYV29rDRnJ3PMPbcyxzhdCP/97WG'); --testpass
+INSERT INTO "user" (username, passwordHash) VALUES ('Béla', '$2a$10$q5MrVvUmeU7EdxdGCiz0ZOU/yR9S/FMMeA74v7MGv16JJMCxaA.uy'); --pass123
+INSERT INTO "user" (username, passwordHash) VALUES ('Harry Potter', '$2a$10$K3P7jjAb0Vb5OkxLi5y5quQzR2QUqL0Lbroo.lBP9tXnFhcLEXY7G'); --mesecure
 
 
 INSERT INTO website (url, user_id) VALUES ('google.com', 1);

@@ -31,6 +31,11 @@ public class ReviewController {
         return reviewService.getReviewsByWebsiteId(websiteId);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<ReviewDTO> getReviewsByUser(@PathVariable int userId) {
+        return reviewService.getReviewsByUserId(userId);
+    }
+
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Integer> addNewReview(@RequestBody NewReviewDTO newReviewDTO) {
