@@ -15,21 +15,27 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
-    const response = await fetch(
-      `/api/user/login?username=${encodeURIComponent(
-        username
-      )}&password=${encodeURIComponent(password)}`
-    );
-    if (!response.ok) {
-      setError(
-        response.status === 500 ? "Server error" : "Wrong username or password"
-      );
-      return;
+    try {
+      const response = await fetch(`/api/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      if (!response.ok) {
+        setError(
+          response.status === 500
+            ? "Server error"
+            : "Wrong username or password"
+        );
+        return;
+      }
+      const id = await response.json();
+      localStorage.setItem("userId", id);
+      localStorage.setItem("username", username);
+      navigate("/u/websites");
+    } catch (err) {
+      setError("Internal Server Error:", err);
     }
-    const id = await response.json();
-    localStorage.setItem("userId", id);
-    localStorage.setItem("username", username);
-    navigate("/u/websites");
   }
 
   return (
