@@ -43,6 +43,7 @@
 
 .navbar-link {
   padding: 0.4rem 0.6rem;
-  border: 1px solid #ccc;
+  border: 1px solid #413e3e;
+  background: #b8c5cf;
   border-radius: 4px;
 }

@@ -1,0 +1,56 @@
+.website-page {
+  padding: 1rem 0;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.website-error {
+  color: #8a1f1f;
+}
+
+.website-header {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 1rem;
+  border: 2px solid #9fadb3;
+  border-radius: 10px;
+  background: #b9cede;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 8);
+  padding: 0.9rem 1rem;
+}
+
+.website-title {
+  margin: 0;
+  word-break: break-all;
+}
+
+.website-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.website-aggregate {
+  margin-top: 4px;
+  font-size: 1rem;
+}
+
+.reviews-section h3 {
+  margin: 1rem 0 0.5rem;
+}
+
+.reviews-empty {
+  color: #4b5563;
+}
+
+.reviews-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
