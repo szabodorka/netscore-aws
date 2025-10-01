@@ -1,0 +1,42 @@
+.review-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f2f3f4;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 6px;
+}
+
+.review-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.review-score {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.review-score-num {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.review-username {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.review-comment {
+  margin: 0;
+  color: #1f2937;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

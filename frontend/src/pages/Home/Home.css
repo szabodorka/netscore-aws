@@ -1,0 +1,23 @@
+.home-page {
+  padding: 1rem 0;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.home-error {
+  color: #8a1f1f;
+}
+
+.home-empty {
+  color: #4b5563;
+}
+
+.website-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
