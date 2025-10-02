@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "netscore-terraform-state"
+  bucket = "netscore-terraform-state-bramlak-dorka"
 }
 
 resource "aws_s3_bucket_versioning" "terraform_state_versioning" {
