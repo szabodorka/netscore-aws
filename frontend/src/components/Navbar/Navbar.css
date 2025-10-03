@@ -1,6 +1,12 @@
 .navbar {
   width: 100%;
-  display: flex;
+}
+
+.navbar-wrapper {
+  max-width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 12px;
   padding: 0.75rem 1rem;
@@ -11,6 +17,7 @@
   display: flex;
   align-items: center;
   color: inherit;
+  margin-left: 10%;
 }
 
 .navbar-logo {
@@ -19,8 +26,8 @@
 }
 
 .navbar-search {
-  margin-left: auto;
   display: flex;
+  justify-content: center;
   gap: 8px;
 }
 
@@ -28,17 +35,35 @@
   padding: 0.4rem 0.6rem;
   border-radius: 4px;
   border: 1px solid #ccc;
+  min-width: 250px;
+  min-height: 35px;
+  font-size: medium;
+  background: #3b3f42;
 }
 
-.navbar-btn {
-  padding: 0.4rem 0.7rem;
-  cursor: pointer;
+.navbar-input:hover {
+  border-color: gray;
+}
+
+.navbar-input:focus-within {
+  background: #2b2e30;
+  border-color: gray;
 }
 
 .navbar-actions {
   display: flex;
-  gap: 8px;
-  margin-left: 12px;
+  gap: 15px;
+  min-width: 360px;
+}
+
+.navbar-actions .navbar-link,
+.navbar-actions .navbar-btn {
+  min-height: 35px;
+  min-width: 80px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar-link {
