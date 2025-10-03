@@ -1,0 +1,134 @@
+.newreview-page {
+  padding: 1rem 0;
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.newreview-title {
+  margin: 0 0 1rem 0;
+}
+
+.newreview-form {
+  display: grid;
+  gap: 16px;
+}
+
+.newreview-field {
+  display: grid;
+  gap: 8px;
+  color: #213547;
+}
+
+.newreview-label {
+  font-weight: 600;
+}
+
+.newreview-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.newreview-input {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #cfd6e0;
+  border-radius: 6px;
+  background: #fff;
+  color: #213547;
+}
+
+.newreview-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.newreview-btn {
+  padding: 0.55rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #cfd6e0;
+  cursor: pointer;
+  color: #213547;
+}
+
+.newreview-btn.submit {
+  background: #c0c4c2;
+  border-color: #5c635e;
+}
+
+.newreview-btn.submit:hover {
+  background: #daf6e4;
+}
+
+.newreview-btn.similar {
+  background: #f3f7ff;
+  border-color: #62676c;
+}
+
+.newreview-btn.similar:hover {
+  background: #e7efff;
+}
+
+.newreview-btn.linklike {
+  border: none;
+  background: transparent;
+  color: #3b82f6;
+  padding: 0;
+}
+
+.newreview-hint {
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.newreview-similar {
+  display: grid;
+  gap: 10px;
+}
+
+.newreview-similar-title {
+  margin: 0;
+  color: #374151;
+}
+
+.newreview-similar-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.newreview-similar-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.8rem;
+  background: #fff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.newreview-similar-card:hover {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.newreview-similar-url {
+  font-weight: 600;
+  color: #1f2937;
+  word-break: break-all;
+}
+
+.newreview-similar-meta {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.newreview-pick,
+.newreview-empty {
+  color: #4b5563;
+}
