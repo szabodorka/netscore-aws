@@ -12,20 +12,57 @@
   color: #8a1f1f;
 }
 
-.website-header {
+.website-header-card {
   display: grid;
   gap: 8px;
   margin-bottom: 1rem;
-  border: 2px solid #9fadb3;
+  border: 2px solid #939899;
   border-radius: 10px;
-  background: #b9cede;
+  background: #c7d7e2;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 8);
   padding: 0.9rem 1rem;
+}
+
+.site-favicon {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  background: #f1f3f5;
+}
+
+.site-header-main {
+  display: grid;
+  gap: 6px;
 }
 
 .website-title {
   margin: 0;
   word-break: break-all;
+}
+
+.website-subrow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.site-domain {
+  color: #4b5563;
+}
+
+.visit-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+.visit-link:hover {
+  text-decoration: underline;
+}
+
+.site-description {
+  margin: 4px 0 0 0;
+  color: #1f2937;
 }
 
 .website-meta {
