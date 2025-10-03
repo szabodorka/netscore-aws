@@ -1,12 +1,13 @@
 .website-card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid #caced7;
   border-radius: 10px;
   padding: 0.9rem 1rem;
-  background: #f2f3f4;
+  background: #f2f4f3;
+  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   display: grid;
-  gap: 6px;
+  gap: 14px;
 }
 
 .website-card:hover {
@@ -19,6 +20,28 @@
   font-weight: 600;
   color: #1f2937;
   word-break: break-all;
+}
+
+.website-card-favicon {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  background: #f2f3f4;
+}
+
+.website-card-title {
+  margin: 0;
+  word-break: break-word;
+  font-size: 1.1rem;
+}
+
+.website-card-subrow {
+  margin-top: 4px;
+}
+
+.website-card-domain {
+  color: #374151;
+  font-size: 0.95rem;
 }
 
 .website-card-meta {
