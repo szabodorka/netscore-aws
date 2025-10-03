@@ -10,3 +10,17 @@ resource "aws_ecr_repository" "backend" {
     Name = "${var.project_name}-backend"
   }
 }
+
+
+resource "aws_ecr_repository" "frontend" {
+  name                 = "${var.project_name}-frontend"
+  image_tag_mutability = "MUTABLE"
+  force_delete = true
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  tags = {
+    Name = "${var.project_name}-frontend"
+  }
+}
