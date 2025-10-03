@@ -45,7 +45,8 @@ export default function WebsitePage() {
           setWebsiteUserName("deleted user");
         }
       } catch (err) {
-        setError("Error:", err);
+        console.error("Error:", err);
+        setError("Internal Server Error");
         setWebsite(null);
       }
       setLoadingSite(false);
@@ -91,7 +92,8 @@ export default function WebsitePage() {
           })
         );
         setUserNames(cache);
-      } catch {
+      } catch (err) {
+        console.error("Error:", err);
         setReviews([]);
         setUserNames({});
       }
@@ -109,6 +111,12 @@ export default function WebsitePage() {
         ).toFixed(1)
       : null;
 
+  const faviconUrl = website?.domain
+    ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
+        website.domain
+      )}&sz=64`
+    : null;
+
   return (
     <section className="website-page">
       <div className="container">
@@ -116,8 +124,31 @@ export default function WebsitePage() {
         {error && <p className="website-error">{error}</p>}
         {!loadingSite && website && (
           <>
-            <header className="website-header">
-              <h2 className="website-title">{website.url}</h2>
+            <header className="website-header-card">
+              {faviconUrl && (
+                <img
+                  className="site-favicon"
+                  src={faviconUrl}
+                  alt={`${website.name} favicon`}
+                />
+              )}
+              <div className="site-header-main">
+                <h2 className="website-title">{website.name}</h2>
+              </div>
+              <div className="website-subrow">
+                <span className="site-domain">{website.domain}</span>
+                <a
+                  className="visit-link"
+                  href={website.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visit site
+                </a>
+              </div>
+              {website.description && (
+                <p className="site-description">{website.description}</p>
+              )}
               <div className="website-meta">
                 <span>
                   Posted:{" "}
