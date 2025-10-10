@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    networks:
+      - netscore-network
+  backend:
+    build: ./backend
+    image: netscore-backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - NETSCORE_DATABASE_URL=${NETSCORE_DATABASE_URL}
+      - NETSCORE_DATABASE_USERNAME=${NETSCORE_DATABASE_USERNAME}
+      - NETSCORE_DATABASE_PASSWORD=${NETSCORE_DATABASE_PASSWORD}
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - netscore-network
+  frontend:
+    build: ./frontend
+    image: netscore-frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+    networks:
+      - netscore-network
+
+volumes:
+  db-data:
+
+networks:
+  netscore-network:
+    driver: bridge
