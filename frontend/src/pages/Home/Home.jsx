@@ -59,7 +59,8 @@ export default function Home() {
             {websites.map((website) => (
               <WebsiteCard
                 key={website.id}
-                url={website.url}
+                domain={website.domain}
+                name={website.name}
                 postDate={website.postDate}
                 onClick={() => handleCardClick(website.id)}
               />

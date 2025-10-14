@@ -25,33 +25,35 @@ export default function Navbar() {
 
   return (
     <header className="navbar">
-      <Link className="navbar-logo-container" to="/u/websites">
-        <img src={logo} alt="NetScore logo" className="navbar-logo" />
-      </Link>
-
-      <form className="navbar-search" onSubmit={handleSearch}>
-        <input
-          className="navbar-input"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search websites..."
-        />
-        <button className="navbar-btn" type="submit">
-          Search
-        </button>
-      </form>
-
-      <nav className="navbar-actions">
-        <Link className="navbar-link" to="/u/review/new">
-          Create Review
+      <div className="navbar-wrapper">
+        <Link className="navbar-logo-container" to="/u/websites">
+          <img src={logo} alt="NetScore logo" className="navbar-logo" />
         </Link>
-        <Link className="navbar-link" to="/u/account">
-          My Account{username ? ` (${username})` : ""}
-        </Link>
-        <button className="navbar-btn" onClick={handleLogout}>
-          Logout
-        </button>
-      </nav>
+
+        <form className="navbar-search" onSubmit={handleSearch}>
+          <input
+            className="navbar-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search websites..."
+          />
+          <button className="navbar-btn" type="submit">
+            Search
+          </button>
+        </form>
+
+        <nav className="navbar-actions">
+          <Link className="navbar-link" to="/u/review/new">
+            Create Review
+          </Link>
+          <Link className="navbar-link" to="/u/account" username={username}>
+            My Account
+          </Link>
+          <button className="navbar-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </nav>
+      </div>
     </header>
   );
 }

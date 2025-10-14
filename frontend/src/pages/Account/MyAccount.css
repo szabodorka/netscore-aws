@@ -1,0 +1,109 @@
+.account-page {
+  padding: 1rem 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.account-title {
+  margin: 0 0 0.75rem;
+}
+
+.account-card {
+  background: #f2f4f3;
+  border: 1px solid #d2d8e4;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  margin-bottom: 18px;
+}
+
+.account-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.account-row .label {
+  color: #6b7280;
+}
+
+.account-row .value {
+  color: #111827;
+  font-weight: 600;
+}
+
+.account-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.account-actions .delete {
+  background: #e11d48;
+  color: #fff;
+  border: 1px solid #be123c;
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+}
+
+.account-actions .delete:hover {
+  background: #be123c;
+}
+
+.account-actions .back {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  color: #111827;
+  background: #e5e7eb;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+}
+
+.account-reviews h3 {
+  margin: 1rem 0 0.5rem;
+}
+
+.no-reviews {
+  color: #6b7280;
+}
+
+.reviews-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.review-with-website {
+  display: grid;
+  gap: 8px;
+}
+
+.review-website {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.review-website .website-name {
+  font-weight: 700;
+  color: #111827;
+}
+
+.review-website .website-link {
+  align-items: center;
+  color: #2563eb;
+  font-weight: 600;
+  padding: 4px 8px;
+}
+.review-website .website-link:hover {
+  text-decoration: underline;
+}
