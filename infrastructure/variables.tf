@@ -3,3 +3,8 @@ variable "project_name" {
   type = string
   default = "netscore"
 }
+
+variable "region" {
+  description = "Default region specified in terraform.tfvars file"
+  type = string
+}
