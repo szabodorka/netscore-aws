@@ -15,9 +15,9 @@ output "public_subnet_ids" {
 }
 
 output "db_subnet_ids" {
-  value = [aws_subnet.db_a.id, aws_subnet.db_b.id, aws_subnet.db_c.id]
+  value = [aws_subnet.db_a.id, aws_subnet.db_b.id]
 }
 
 output "db_subnet_cidr_blocks" {
-  value = [aws_subnet.db_a.cidr_block, aws_subnet.db_b.cidr_block, aws_subnet.db_c.cidr_block]
+  value = [aws_subnet.db_a.cidr_block, aws_subnet.db_b.cidr_block]
 }

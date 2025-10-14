@@ -10,7 +10,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_a" {
  vpc_id                  = aws_vpc.main.id
- cidr_block              = "10.0.30.0/24"
+ cidr_block              = "10.0.3.0/24"
  availability_zone       = "${var.region}a"
  map_public_ip_on_launch = true
 
@@ -22,7 +22,7 @@ resource "aws_subnet" "public_a" {
 
 resource "aws_subnet" "public_b" {
  vpc_id                  = aws_vpc.main.id
- cidr_block              = "10.0.31.0/24"
+ cidr_block              = "10.0.4.0/24"
  availability_zone       = "${var.region}b"
  map_public_ip_on_launch = true
 
@@ -34,7 +34,7 @@ resource "aws_subnet" "public_b" {
 
 resource "aws_subnet" "private_a" {
  vpc_id             = aws_vpc.main.id
- cidr_block         = "10.0.32.0/24"
+ cidr_block         = "10.0.5.0/24"
  availability_zone  = "${var.region}a"
 
  tags = {
@@ -45,7 +45,7 @@ resource "aws_subnet" "private_a" {
 
 resource "aws_subnet" "private_b" {
  vpc_id             = aws_vpc.main.id
- cidr_block         = "10.0.33.0/24"
+ cidr_block         = "10.0.6.0/24"
  availability_zone  = "${var.region}b"
 
  tags = {
@@ -56,7 +56,7 @@ resource "aws_subnet" "private_b" {
 
 resource "aws_subnet" "db_a" {
  vpc_id             = aws_vpc.main.id
- cidr_block         = "10.0.34.0/24"
+ cidr_block         = "10.0.7.0/24"
  availability_zone  = "${var.region}a"
 
  tags = {
@@ -66,21 +66,11 @@ resource "aws_subnet" "db_a" {
 
 resource "aws_subnet" "db_b" {
  vpc_id             = aws_vpc.main.id
- cidr_block         = "10.0.35.0/24"
+ cidr_block         = "10.0.8.0/24"
  availability_zone  = "${var.region}b"
 
  tags = {
    Name = "${var.project_name}-db-b"
- }
-}
-
-resource "aws_subnet" "db_c" {
- vpc_id             = aws_vpc.main.id
- cidr_block         = "10.0.36.0/24"
- availability_zone  = "${var.region}c"
-
- tags = {
-   Name = "${var.project_name}-db-c"
  }
 }
 
