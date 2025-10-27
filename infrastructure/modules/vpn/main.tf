@@ -79,14 +79,6 @@ resource "aws_ec2_client_vpn_route" "internet_access" {
 
   timeouts {
     create = "10m"
+    delete = "10m"
   }
-}
-
-
-data "aws_ec2_client_vpn_endpoint" "selected" {
-  client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.vpn.id
-
-  depends_on = [
-    aws_ec2_client_vpn_endpoint.vpn
-  ]
 }
