@@ -1,0 +1,6 @@
+region="eu-north-1"
+
+vpn_clients = [
+  "alice",
+  "bob",
+]

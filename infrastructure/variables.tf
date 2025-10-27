@@ -9,6 +9,12 @@ variable "region" {
   type = string
 }
 
+variable "vpn_clients" {
+  description = "VPN client list"
+  type = list(string)
+}
+
+
 variable "db_username" {
   description = "The username of the Postgres database admin"
   sensitive = true
