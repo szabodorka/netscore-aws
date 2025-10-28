@@ -30,13 +30,13 @@ resource "aws_security_group" "db_sg" {
 resource "aws_db_instance" "netscore_db" {
   identifier             = "${var.project_name}-db"
   engine                 = "postgres"
-  engine_version         = "16.4"
+  engine_version         = "16"
   instance_class         = "db.t4g.medium"
   allocated_storage      = 20
   storage_type           = "gp3"
   username               = var.db_username
   password               = var.db_password
-  db_name                = "netscore" 
+  db_name                = var.project_name
   multi_az               = true 
   storage_encrypted      = true 
   publicly_accessible    = false 
