@@ -6,7 +6,7 @@ resource "aws_s3_object" "vpn_config_upload" {
 client
 dev tun
 proto udp
-remote ${aws_ec2_client_vpn_endpoint.vpn.dns_name} 443
+remote ${replace(aws_ec2_client_vpn_endpoint.vpn.dns_name, "*.", "")} 443
 remote-random-hostname
 resolv-retry infinite
 nobind
