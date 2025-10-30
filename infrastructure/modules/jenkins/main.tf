@@ -89,9 +89,7 @@ data "aws_ami" "amazon_linux_64" {
   owners = ["amazon"]
 }
 
-data "aws_ebs_volume" "jenkins" {
-  volume_id = var.ebs_volume_id
-}
+
 
 
 resource "aws_instance" "jenkins" {
@@ -138,6 +136,6 @@ resource "aws_instance" "jenkins" {
 
 resource "aws_volume_attachment" "jenkins_data_attach" {
   device_name = "/dev/sdf"
-  volume_id   = data.aws_ebs_volume.jenkins_data.id
+  volume_id   = var.ebs_volume_id
   instance_id = aws_instance.jenkins.id
 }
