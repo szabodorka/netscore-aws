@@ -12,3 +12,8 @@ output "jenkins_private_ip" {
   value = module.jenkins.private_ip
   description = "Private IPv4 address of the Jenkins EC2 instance"
 }
+
+output "jenkins_web_ui_url" {
+  description = "Url of jenkins web ui"
+  value = module.jenkins.web_ui_url
+}
