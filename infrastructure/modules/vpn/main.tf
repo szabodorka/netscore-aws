@@ -69,6 +69,12 @@ resource "aws_ec2_client_vpn_authorization_rule" "vpn_internet_access" {
   target_network_cidr    = "0.0.0.0/0"
   authorize_all_groups   = true
   description            = "Allow VPN clients to access the internet"
+
+  timeouts {
+    create = "15m"
+    delete = "15m"
+  }
+
 }
 
 resource "aws_ec2_client_vpn_route" "internet_access" {
@@ -78,7 +84,7 @@ resource "aws_ec2_client_vpn_route" "internet_access" {
   description            = "Route internet traffic through NAT Gateway"
 
   timeouts {
-    create = "10m"
-    delete = "10m"
+    create = "15m"
+    delete = "15m"
   }
 }
