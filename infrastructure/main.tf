@@ -39,3 +39,12 @@ module "rds" {
   db_username        = var.db_username
   db_password        = var.db_password
 }
+
+
+module "jenkins" {
+  source = "./modules/jenkins"
+  ec2_private_subnet_id = module.vpc.private_subnet_ids[0]
+  project_name = var.project_name
+  key_name = var.jenkins_key_name
+  ebs_volume_id = var.jenkins_ebs_volume_id
+}

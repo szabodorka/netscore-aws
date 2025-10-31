@@ -4,3 +4,7 @@ vpn_clients = [
   "alice",
   "bob",
 ]
+
+jenkins_key_name = "hairpin"
+
+jenkins_ebs_volume_id = "my-volume-id"
