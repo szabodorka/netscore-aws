@@ -7,6 +7,7 @@ pipeline {
         ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}"
         DOCKER_IMAGE_TAG = "${env.BUILD_NUMBER}"
         TERRAFORM_DIR = 'infrastructure'
+        BACKEND_DIR = 'backend'
     }
 
     stages {
@@ -18,26 +19,30 @@ pipeline {
 
         stage('Build and Test') {
             steps {
-                script {
-                    sh 'chmod +x ./mvnw'
-                    sh './mvnw clean package -DskipTests'
+                dir("${BACKEND_DIR}") {
+                    script {
+                        sh 'chmod +x ./mvnw'
+                        sh './mvnw clean package -DskipTests'
+                    }
                 }
             }
         }
 
         stage('Docker Build and Push') {
             steps {
-                script {
-                    sh "docker build -t ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ."
+                dir("${BACKEND_DIR}") {
+                    script {
+                        sh "docker build -t ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ."
 
-                    docker.withRegistry("https://${ECR_REGISTRY}") {
-                        // Tag and push the build number version
-                        sh "docker tag ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG}"
-                        sh "docker push ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG}"
+                        docker.withRegistry("https://${ECR_REGISTRY}") {
+                            // Tag and push the build number version
+                            sh "docker tag ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG}"
+                            sh "docker push ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG}"
 
-                        // Additionally tag and push as 'latest'
-                        sh "docker tag ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY}:latest"
-                        sh "docker push ${ECR_REGISTRY}:latest"
+                            // Additionally tag and push as 'latest'
+                            sh "docker tag ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY}:latest"
+                            sh "docker push ${ECR_REGISTRY}:latest"
+                        }
                     }
                 }
             }
@@ -62,10 +67,8 @@ pipeline {
 
     post {
         always {
-            // Clean up Docker images
             sh "docker rmi ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG} || true"
             sh "docker rmi ${ECR_REGISTRY}:latest || true"
-            // Clean up workspace
             cleanWs()
         }
         success {
