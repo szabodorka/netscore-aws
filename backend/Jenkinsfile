@@ -41,14 +41,12 @@ pipeline {
 
         stage('Deploy with Terraform') {
             when {
-                branch 'main'
+                branch 'feature/infra-backend-pipeline'
             }
             steps {
                 dir("${TERRAFORM_DIR}") {
                     script {
                         sh 'terraform init'
-
-                        sh 'terraform plan -var="image_tag=${DOCKER_IMAGE_TAG}"'
 
                         sh "terraform apply -auto-approve -var=\"image_tag=${DOCKER_IMAGE_TAG}\""                    }
                 }
