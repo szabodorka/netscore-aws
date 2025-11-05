@@ -20,6 +20,10 @@ resource "aws_iam_role_policy_attachment" "ssm" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+resource "aws_iam_role_policy_attachment" "ecr" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
+}
 
 
 
@@ -109,6 +113,7 @@ resource "aws_instance" "jenkins" {
     sudo dnf upgrade -y
     sudo dnf install -y java-21-amazon-corretto
     sudo dnf install jenkins -y
+    sudo dnf install git -y
     
     sudo dnf install -y amazon-ssm-agent
     sudo systemctl enable amazon-ssm-agent
