@@ -129,6 +129,8 @@ resource "aws_instance" "jenkins" {
       sudo mkfs -t ext4 "$DEVICE"
     fi
 
+    sudo usermod -aG docker jenkins
+
     sudo mkdir -p /var/lib/jenkins
     sudo mount /dev/sdf /var/lib/jenkins
     sudo chown -R jenkins:jenkins /var/lib/jenkins
