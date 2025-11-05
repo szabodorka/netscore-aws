@@ -17,17 +17,6 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
-            steps {
-                dir("${BACKEND_DIR}") {
-                    script {
-                        sh 'chmod +x ./mvnw'
-                        sh './mvnw clean package -DskipTests'
-                    }
-                }
-            }
-        }
-
         stage('Docker Build and Push') {
             steps {
                 dir("${BACKEND_DIR}") {
