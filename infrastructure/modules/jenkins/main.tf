@@ -30,6 +30,18 @@ resource "aws_iam_role_policy_attachment" "ecr_full_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
 }
 
+resource "aws_iam_role_policy_attachment" "terraform_s3" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "terraform_dynamodb" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+}
+
+
+
 
 resource "aws_iam_instance_profile" "jenkins" {
   name = "jenkins-instance-profile"
@@ -107,6 +119,11 @@ resource "aws_instance" "jenkins" {
   iam_instance_profile = aws_iam_instance_profile.jenkins.name
   security_groups      = [aws_security_group.jenkins_ec2.id]
   key_name             = var.key_name
+
+  root_block_device {
+    volume_size = var.instance_root_size
+    volume_type = "gp3"
+  }
 
   user_data = <<-EOF
     #!/bin/bash
