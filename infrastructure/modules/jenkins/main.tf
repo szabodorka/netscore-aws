@@ -135,6 +135,16 @@ resource "aws_instance" "jenkins" {
     sudo dnf install -y java-21-amazon-corretto
     sudo dnf install jenkins -y
     sudo dnf install git -y
+
+    sudo dnf install docker -y
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo usermod -aG docker jenkins
+
+    sudo wget -O /etc/yum.repos.d/hashicorp.repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+    sudo dnf install terraform -y
+
+
     
     sudo dnf install -y amazon-ssm-agent
     sudo systemctl enable amazon-ssm-agent
@@ -146,7 +156,6 @@ resource "aws_instance" "jenkins" {
       sudo mkfs -t ext4 "$DEVICE"
     fi
 
-    sudo usermod -aG docker jenkins
 
     sudo mkdir -p /var/lib/jenkins
     sudo mount /dev/sdf /var/lib/jenkins
