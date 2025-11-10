@@ -8,6 +8,7 @@ pipeline {
         DOCKER_IMAGE_TAG = "${env.BUILD_NUMBER}"
         TERRAFORM_DIR = 'infrastructure'
         BACKEND_DIR = 'backend'
+        BRANCH = 'main'
     }
 
     stages {
@@ -41,14 +42,15 @@ pipeline {
 
         stage('Deploy with Terraform') {
             when {
-                branch 'feature/infra-backend-pipeline'
+                branch "${BRANCH}"
             }
             steps {
                 dir("${TERRAFORM_DIR}") {
                     script {
                         sh 'terraform init'
 
-                        sh "terraform apply -auto-approve -var=\"image_tag=${DOCKER_IMAGE_TAG}\""                    }
+                        sh "terraform apply -auto-approve -var=\"image_tag=${DOCKER_IMAGE_TAG}\""
+                    }
                 }
             }
         }
