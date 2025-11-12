@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = 'eu-north-1'
+        ECR_REPOSITORY = 'netscore-backend'
+        ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}"
+        DOCKER_IMAGE_TAG = "${env.BUILD_NUMBER}"
+        TERRAFORM_DIR = 'infrastructure'
+        BACKEND_DIR = 'backend'
+        BRANCH = 'main'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Docker Build and Push') {
+            steps {
+                dir("${BACKEND_DIR}") {
+                    script {
+                        sh """
+                            aws ecr get-login-password --region ${AWS_REGION} \
+                            | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+                        """
+                        sh "docker build -t ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ."
+
+                        // Tag and push the build number version
+                        sh "docker tag ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG}"
+                        sh "docker push ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG}"
+
+                        // Additionally tag and push as 'latest'
+                        sh "docker tag ${ECR_REPOSITORY}:${DOCKER_IMAGE_TAG} ${ECR_REGISTRY}:latest"
+                        sh "docker push ${ECR_REGISTRY}:latest"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy with Terraform') {
+            when {
+                branch "${BRANCH}"
+            }
+            steps {
+                dir("${TERRAFORM_DIR}") {
+                    script {
+                        sh 'terraform init'
+
+                        sh "terraform apply -auto-approve -var=\"image_tag=${DOCKER_IMAGE_TAG}\""
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh "docker rmi ${ECR_REGISTRY}:${DOCKER_IMAGE_TAG} || true"
+            sh "docker rmi ${ECR_REGISTRY}:latest || true"
+            cleanWs()
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
