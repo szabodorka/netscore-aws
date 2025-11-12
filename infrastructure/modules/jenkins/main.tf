@@ -20,6 +20,26 @@ resource "aws_iam_role_policy_attachment" "ssm" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+resource "aws_iam_role_policy_attachment" "ecr" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
+}
+
+resource "aws_iam_role_policy_attachment" "ecr_full_access" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "terraform_s3" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "terraform_dynamodb" {
+  role       = aws_iam_role.jenkins.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+}
+
 
 
 
@@ -100,6 +120,11 @@ resource "aws_instance" "jenkins" {
   security_groups      = [aws_security_group.jenkins_ec2.id]
   key_name             = var.key_name
 
+  root_block_device {
+    volume_size = var.instance_root_size
+    volume_type = "gp3"
+  }
+
   user_data = <<-EOF
     #!/bin/bash
     sudo dnf update -y
@@ -109,6 +134,17 @@ resource "aws_instance" "jenkins" {
     sudo dnf upgrade -y
     sudo dnf install -y java-21-amazon-corretto
     sudo dnf install jenkins -y
+    sudo dnf install git -y
+
+    sudo dnf install docker -y
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo usermod -aG docker jenkins
+
+    sudo wget -O /etc/yum.repos.d/hashicorp.repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+    sudo dnf install terraform -y
+
+
     
     sudo dnf install -y amazon-ssm-agent
     sudo systemctl enable amazon-ssm-agent
@@ -119,6 +155,7 @@ resource "aws_instance" "jenkins" {
     if ! lsblk -f "$DEVICE" | grep -q ext4; then
       sudo mkfs -t ext4 "$DEVICE"
     fi
+
 
     sudo mkdir -p /var/lib/jenkins
     sudo mount /dev/sdf /var/lib/jenkins

@@ -26,3 +26,9 @@ variable "ebs_volume_id" {
   description = "Existing EBS volume ID to attach to the Jenkins EC2 instance"
   type        = string
 }
+
+variable "instance_root_size" {
+  description = "Size of the jenkins ec2 instance root storage in GB"
+  type = number
+  default = 30
+}
