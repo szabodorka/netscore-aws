@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+
+    environment { 
+        IMAGE_TAG = "${env.BUILD_NUMBER}"  
+        IMAGE_NAME = "netscore-frontend"
+        ECR_REGISTRY = "${env.FRONTEND_REGISTRY}"
+        AWS_REGION = "${env.AWS_REGION}"
+        GITHUB_REPO = "${env.NETSCORE_AWS}"
+        TERRAFORM_DIR = "frontend-deployment"
+        FRONTEND_DIR = "frontend"
+        BRANCH = "main"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Checking out ${GITHUB_REPO} (${BRANCH})"
+                git url: "${GITHUB_REPO}", branch: "${BRANCH}"
+            }
+        }
+        stage("Docker Build") {
+            steps {
+                dir("${FRONTEND_DIR}") {
+                    script {
+                        sh """docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."""
+                        echo "Successful build of Frontend image: ${IMAGE_NAME}:${IMAGE_TAG}"
+                    }
+                }
+            }
+        }
+        stage('Push to ECR') {
+            steps {
+                script {
+                    docker.withRegistry("https://${ECR_REGISTRY}", "ecr:${AWS_REGION}:aws") {
+                        
+                        sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${ECR_REGISTRY}:${IMAGE_TAG}"
+                        sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${ECR_REGISTRY}:latest"
+                        
+                        sh "docker push ${ECR_REGISTRY}:${IMAGE_TAG}"
+                        sh "docker push ${ECR_REGISTRY}:latest"
+                    }
+                }
+            }
+        }
+        stage('Deploy with Terraform') {
+            when {
+                branch "${BRANCH}"
+            }
+            steps {
+                dir("${TERRAFORM_DIR}") {
+                    script {
+                        sh "terraform init"
+                        sh "terraform apply -lock=false -auto-approve -var=\"image_tag=${IMAGE_TAG}\""
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh "docker rmi ${ECR_REGISTRY}:${IMAGE_TAG} || true"
+            sh "docker rmi ${ECR_REGISTRY}:latest || true"
+            sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG} || true"
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
